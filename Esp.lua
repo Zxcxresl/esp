@@ -5,12 +5,12 @@ local success, errorMsg = pcall(function()
 
     local playerGui = player:WaitForChild("PlayerGui", 5)
     if not playerGui then
-        error("PlayerGui no encontrado")
+        error("PlayerGui no disponible")
     end
 
     -- Crear ScreenGui
     local screenGui = Instance.new("ScreenGui")
-    screenGui.Name = "ESP_Toggle"
+    screenGui.Name = "Clip_Menu"
     screenGui.ResetOnSpawn = false
     screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     screenGui.IgnoreGuiInset = true
@@ -21,24 +21,24 @@ local success, errorMsg = pcall(function()
     debugLabel.Size = UDim2.new(1, 0, 0, 30)
     debugLabel.Position = UDim2.new(0, 0, 0, 0)
     debugLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    debugLabel.BackgroundTransparency = 0.5
+    debugLabel.BackgroundTransparency = 0.3
     debugLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    debugLabel.Font = Enum.Font.Gotham
+    debugLabel.Font = Enum.Font.SourceSansBold
     debugLabel.TextSize = 16
     debugLabel.Text = "Script cargado. Toca el botón ☰ para abrir el menú."
-    debugLabel.ZIndex = 1000
+    debugLabel.ZIndex = 3
     debugLabel.Parent = screenGui
 
-    -- Crear Botón Flotante para Togglear Menú
+    -- Crear Botón Flotante para Togglear
     local toggleButton = Instance.new("TextButton")
     toggleButton.Size = UDim2.new(0, 50, 0, 50)
     toggleButton.Position = UDim2.new(1, -60, 0, 10)
     toggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
     toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    toggleButton.Font = Enum.Font.GothamBold
+    toggleButton.Font = Enum.Font.SourceSansBold
     toggleButton.TextSize = 20
     toggleButton.Text = "☰"
-    toggleButton.ZIndex = 1001
+    toggleButton.ZIndex = 4
     toggleButton.Parent = screenGui
     local toggleCorner = Instance.new("UICorner")
     toggleCorner.CornerRadius = UDim.new(0, 10)
@@ -66,9 +66,9 @@ local success, errorMsg = pcall(function()
     title.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
     title.BackgroundTransparency = 0.5
     title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    title.Font = Enum.Font.GothamBold
+    title.Font = Enum.Font.SourceSansBold
     title.TextSize = 16
-    title.Text = "🔍 ESP Menu by Zxcx"
+    title.Text = "🔍 Clip Menu by Zxcx"
     title.ZIndex = 2
 
     local closeButton = Instance.new("TextButton")
@@ -78,7 +78,7 @@ local success, errorMsg = pcall(function()
     closeButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
     closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     closeButton.Text = "X"
-    closeButton.Font = Enum.Font.GothamBold
+    closeButton.Font = Enum.Font.SourceSansBold
     closeButton.TextSize = 16
     closeButton.ZIndex = 3
     local closeCorner = Instance.new("UICorner")
@@ -92,7 +92,7 @@ local success, errorMsg = pcall(function()
     minimizeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
     minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     minimizeButton.Text = "-"
-    minimizeButton.Font = Enum.Font.GothamBold
+    minimizeButton.Font = Enum.Font.SourceSansBold
     minimizeButton.TextSize = 16
     minimizeButton.ZIndex = 3
     local minimizeCorner = Instance.new("UICorner")
@@ -113,18 +113,18 @@ local success, errorMsg = pcall(function()
     contentFrame.BackgroundTransparency = 1
     contentFrame.ZIndex = 2
 
-    local tabs = {"ESP", "Fly", "NoClip", "Speed", "Combat"}
+    local tabs = {"ESP", "Up/Down", "Speed"}
     local tabButtons = {}
     local currentTab = nil
 
     for i, tabName in ipairs(tabs) do
         local tabButton = Instance.new("TextButton")
         tabButton.Parent = tabFrame
-        tabButton.Size = UDim2.new(0.2, 0, 1, 0)
-        tabButton.Position = UDim2.new((i-1)*0.2, 0, 0, 0)
+        tabButton.Size = UDim2.new(0.33, 0, 1, 0)
+        tabButton.Position = UDim2.new((i-1)*0.33, 0, 0, 0)
         tabButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
         tabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-        tabButton.Font = Enum.Font.Gotham
+        tabButton.Font = Enum.Font.SourceSans
         tabButton.TextSize = 14
         tabButton.Text = tabName
         tabButton.ZIndex = 3
@@ -175,7 +175,7 @@ local success, errorMsg = pcall(function()
         textLabel.Size = UDim2.new(1, 0, 1, 0)
         textLabel.BackgroundTransparency = 1
         textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        textLabel.Font = Enum.Font.GothamBold
+        textLabel.Font = Enum.Font.SourceSansBold
         textLabel.TextSize = 14
         textLabel.TextStrokeTransparency = 0.5
 
@@ -195,7 +195,7 @@ local success, errorMsg = pcall(function()
 
         local plr = game.Players:GetPlayerFromCharacter(character)
         if plr then
-            local teamName = plr.Team and plr.Team.Name or "No Team"
+            local teamName = plr.Team and plr.Team.Name or "Sin equipo"
             local humanoid = character:FindFirstChild("Humanoid")
             local health = humanoid and math.floor(humanoid.Health) or 0
             local maxHealth = humanoid and math.floor(humanoid.MaxHealth) or 100
@@ -219,7 +219,7 @@ local success, errorMsg = pcall(function()
                 local espData = espObjects[char]
                 if rootPart and humanoid and espData then
                     local distance = (rootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
-                    local teamName = plr.Team and plr.Team.Name or "No Team"
+                    local teamName = plr.Team and plr.Team.Name or "Sin equipo"
                     local health = math.floor(humanoid.Health)
                     local maxHealth = math.floor(humanoid.MaxHealth)
                     espData[3].Text = string.format("%s | %.1fm | %d/%d HP | %s", teamName, distance, health, maxHealth, plr.Name)
@@ -260,7 +260,7 @@ local success, errorMsg = pcall(function()
 
     local function toggleESP()
         espEnabled = not espEnabled
-        debugLabel.Text = "ESP toggled: " .. tostring(espEnabled)
+        debugLabel.Text = "ESP: " .. (espEnabled and "Activado" or "Desactivado")
         if espEnabled then
             refreshESP()
             espConnection = runService.Heartbeat:Connect(function()
@@ -290,196 +290,31 @@ local success, errorMsg = pcall(function()
         end
     end
 
-    -- Fly Logic
-    local flyEnabled = false
-    local flySpeed = 50
-    local flyConnection
-    local bodyVelocity
-    local bodyGyro
-
-    local function startFly()
-        if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then
-            return
-        end
-        local rootPart = player.Character.HumanoidRootPart
-        bodyVelocity = Instance.new("BodyVelocity")
-        bodyVelocity.Parent = rootPart
-        bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-        bodyVelocity.Velocity = Vector3.new(0, 0, 0)
-
-        bodyGyro = Instance.new("BodyGyro")
-        bodyGyro.Parent = rootPart
-        bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
-        bodyGyro.CFrame = rootPart.CFrame
-
-        flyConnection = runService.RenderStepped:Connect(function()
-            if not flyEnabled then return end
-            local moveDirection = Vector3.new(0, 0, 0)
-            if userInputService:IsKeyDown(Enum.KeyCode.W) then
-                moveDirection = moveDirection + Vector3.new(0, 0, -1)
-            end
-            if userInputService:IsKeyDown(Enum.KeyCode.S) then
-                moveDirection = moveDirection + Vector3.new(0, 0, 1)
-            end
-            if userInputService:IsKeyDown(Enum.KeyCode.A) then
-                moveDirection = moveDirection + Vector3.new(-1, 0, 0)
-            end
-            if userInputService:IsKeyDown(Enum.KeyCode.D) then
-                moveDirection = moveDirection + Vector3.new(1, 0, 0)
-            end
-            if userInputService:IsKeyDown(Enum.KeyCode.Space) then
-                moveDirection = moveDirection + Vector3.new(0, 1, 0)
-            end
-            if userInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
-                moveDirection = moveDirection + Vector3.new(0, -1, 0)
-            end
-            if moveDirection.Magnitude > 0 then
-                moveDirection = moveDirection.Unit * flySpeed
-            end
-            bodyVelocity.Velocity = rootPart.CFrame:VectorToWorldSpace(moveDirection)
-            bodyGyro.CFrame = game.Workspace.CurrentCamera.CFrame
-        end)
-        debugLabel.Text = "Fly iniciado"
-    end
-
-    local function stopFly()
-        if bodyVelocity then
-            bodyVelocity:Destroy()
-            bodyVelocity = nil
-        end
-        if bodyGyro then
-            bodyGyro:Destroy()
-            bodyGyro = nil
-        end
-        if flyConnection then
-            flyConnection:Disconnect()
-            flyConnection = nil
-        end
-        debugLabel.Text = "Fly detenido"
-    end
-
-    local function toggleFly()
-        flyEnabled = not flyEnabled
-        debugLabel.Text = "Fly toggled: " .. tostring(flyEnabled)
-        if flyEnabled then
-            startFly()
+    -- Up/Down Logic
+    local function moveVertical(direction)
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = player.Character.HumanoidRootPart
+            rootPart.CFrame = rootPart.CFrame + Vector3.new(0, direction * 50, 0)
+            debugLabel.Text = direction > 0 and "Subiendo" or "Bajando"
         else
-            stopFly()
-        end
-    end
-
-    -- NoClip Logic
-    local noClipEnabled = false
-    local noClipConnection
-
-    local function toggleNoClip()
-        noClipEnabled = not noClipEnabled
-        debugLabel.Text = "NoClip toggled: " .. tostring(noClipEnabled)
-        if noClipEnabled then
-            noClipConnection = runService.Stepped:Connect(function()
-                if player.Character then
-                    for _, part in pairs(player.Character:GetDescendants()) do
-                        if part:IsA("BasePart") then
-                            part.CanCollide = false
-                        end
-                    end
-                end
-            end)
-        else
-            if noClipConnection then
-                noClipConnection:Disconnect()
-                noClipConnection = nil
-            end
-            if player.Character then
-                for _, part in pairs(player.Character:GetDescendants()) do
-                    if part:IsA("BasePart") then
-                        part.CanCollide = true
-                    end
-                end
-            end
+            debugLabel.Text = "Personaje no disponible"
         end
     end
 
     -- Speed Logic
-    local walkSpeed = 16
+    local walkSpeed = 20
     local function updateSpeed(delta)
-        walkSpeed = math.clamp(walkSpeed + delta, 16, 100)
+        walkSpeed = math.clamp(walkSpeed + delta, 20, 100)
         if player.Character and player.Character:FindFirstChild("Humanoid") then
             player.Character.Humanoid.WalkSpeed = walkSpeed
         end
-        debugLabel.Text = "Velocidad actualizada: " .. walkSpeed
-    end
-
-    -- Combat Logic
-    local killAuraEnabled = false
-    local aimbotEnabled = false
-    local killAuraRadius = 10
-    local aimFOV = 100
-    local aimPart = "Head"
-    local killAuraConnection
-    local aimbotConnection
-
-    local function toggleKillAura()
-        killAuraEnabled = not killAuraEnabled
-        debugLabel.Text = "Kill Aura toggled: " .. tostring(killAuraEnabled)
-        if killAuraEnabled then
-            killAuraConnection = runService.Heartbeat:Connect(function()
-                if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then return end
-                local weapon = player.Character:FindFirstChildOfClass("Tool")
-                if not weapon then
-                    debugLabel.Text = "No se encontró arma para Kill Aura"
-                    return
-                end
-                for _, plr in pairs(game.Players:GetPlayers()) do
-                    if plr ~= player and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
-                        local distance = (plr.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
-                        if distance <= killAuraRadius then
-                            weapon:Activate()
-                        end
-                    end
-                end
-            end)
-        else
-            if killAuraConnection then
-                killAuraConnection:Disconnect()
-                killAuraConnection = nil
-            end
-        end
-    end
-
-    local function toggleAimbot()
-        aimbotEnabled = not aimbotEnabled
-        debugLabel.Text = "Aimbot toggled: " .. tostring(aimbotEnabled)
-        if aimbotEnabled then
-            aimbotConnection = runService.RenderStepped:Connect(function()
-                if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then return end
-                local camera = game.Workspace.CurrentCamera
-                local closestPlayer = nil
-                local closestDistance = aimFOV
-                for _, plr in pairs(game.Players:GetPlayers()) do
-                    if plr ~= player and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") and plr.Character:FindFirstChild(aimPart) then
-                        local screenPoint, onScreen = camera:WorldToScreenPoint(plr.Character[aimPart].Position)
-                        local distance = (Vector2.new(screenPoint.X, screenPoint.Y) - Vector2.new(game:GetService("UserInputService"):GetMouseLocation())).Magnitude
-                        if onScreen and distance < closestDistance then
-                            closestPlayer = plr
-                            closestDistance = distance
-                        end
-                    end
-                end
-                if closestPlayer then
-                    camera.CFrame = CFrame.new(camera.CFrame.Position, closestPlayer.Character[aimPart].Position)
-                end
-            end)
-        else
-            if aimbotConnection then
-                aimbotConnection:Disconnect()
-                aimbotConnection = nil
-            end
-        end
+        debugLabel.Text = "Velocidad: " .. walkSpeed
     end
 
     local function createTabContent(tabName)
-        clearContent()
+        for _, child in ipairs(contentFrame:GetChildren()) do
+            child:Destroy()
+        end
         debugLabel.Text = "Pestaña " .. tabName .. " seleccionada"
         if tabName == "ESP" then
             local espToggleButton = Instance.new("TextButton")
@@ -488,7 +323,7 @@ local success, errorMsg = pcall(function()
             espToggleButton.Position = UDim2.new(0.1, 0, 0, 0)
             espToggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
             espToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            espToggleButton.Font = Enum.Font.Gotham
+            espToggleButton.Font = Enum.Font.SourceSans
             espToggleButton.TextSize = 16
             espToggleButton.Text = espEnabled and "Desactivar ESP" or "Activar ESP"
             espToggleButton.ZIndex = 3
@@ -502,7 +337,7 @@ local success, errorMsg = pcall(function()
             boxToggleButton.Position = UDim2.new(0.1, 0, 0.15, 0)
             boxToggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
             boxToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            boxToggleButton.Font = Enum.Font.Gotham
+            boxToggleButton.Font = Enum.Font.SourceSans
             boxToggleButton.TextSize = 16
             boxToggleButton.Text = boxEnabled and "Desactivar Box" or "Activar Box"
             boxToggleButton.ZIndex = 3
@@ -516,7 +351,7 @@ local success, errorMsg = pcall(function()
             linesToggleButton.Position = UDim2.new(0.1, 0, 0.3, 0)
             linesToggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
             linesToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            linesToggleButton.Font = Enum.Font.Gotham
+            linesToggleButton.Font = Enum.Font.SourceSans
             linesToggleButton.TextSize = 16
             linesToggleButton.Text = linesEnabled and "Desactivar Lines" or "Activar Lines"
             linesToggleButton.ZIndex = 3
@@ -530,7 +365,7 @@ local success, errorMsg = pcall(function()
             outlineColorLabel.Position = UDim2.new(0, 0, 0.45, 0)
             outlineColorLabel.BackgroundTransparency = 1
             outlineColorLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-            outlineColorLabel.Font = Enum.Font.Gotham
+            outlineColorLabel.Font = Enum.Font.SourceSans
             outlineColorLabel.TextSize = 14
             outlineColorLabel.Text = "Color del Borde"
             outlineColorLabel.ZIndex = 2
@@ -556,7 +391,7 @@ local success, errorMsg = pcall(function()
             fillToggleButton.Position = UDim2.new(0.7, 0, 0.7, 0)
             fillToggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
             fillToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            fillToggleButton.Font = Enum.Font.Gotham
+            fillToggleButton.Font = Enum.Font.SourceSans
             fillToggleButton.TextSize = 14
             fillToggleButton.Text = fillEnabled and "On" or "Off"
             fillToggleButton.ZIndex = 3
@@ -570,7 +405,7 @@ local success, errorMsg = pcall(function()
             fillColorLabel.Position = UDim2.new(0, 0, 0.85, 0)
             fillColorLabel.BackgroundTransparency = 1
             fillColorLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-            fillColorLabel.Font = Enum.Font.Gotham
+            fillColorLabel.Font = Enum.Font.SourceSans
             fillColorLabel.TextSize = 14
             fillColorLabel.Text = "Color del Relleno"
             fillColorLabel.ZIndex = 2
@@ -609,7 +444,7 @@ local success, errorMsg = pcall(function()
             end)
             for i, button in ipairs(outlineColorButtons) do
                 button.MouseButton1Click:Connect(function()
-                    debugLabel.Text = "Color de borde " .. i .. " seleccionado"
+                    debugLabel.Text = "Color de borde seleccionado"
                     outlineColor = colors[i]
                     updateChams()
                 end)
@@ -622,139 +457,47 @@ local success, errorMsg = pcall(function()
             end)
             for i, button in ipairs(fillColorButtons) do
                 button.MouseButton1Click:Connect(function()
-                    debugLabel.Text = "Color de relleno " .. i .. " seleccionado"
+                    debugLabel.Text = "Color de relleno seleccionado"
                     fillColor = colors[i]
                     updateChams()
                 end)
             end
-        elseif tabName == "Fly" then
-            local flyToggleButton = Instance.new("TextButton")
-            flyToggleButton.Parent = contentFrame
-            flyToggleButton.Size = UDim2.new(0.8, 0, 0, 40)
-            flyToggleButton.Position = UDim2.new(0.1, 0, 0, 0)
-            flyToggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            flyToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            flyToggleButton.Font = Enum.Font.Gotham
-            flyToggleButton.TextSize = 16
-            flyToggleButton.Text = flyEnabled and "Desactivar Fly" or "Activar Fly"
-            flyToggleButton.ZIndex = 3
-            local flyToggleCorner = Instance.new("UICorner")
-            flyToggleCorner.CornerRadius = UDim.new(0, 6)
-            flyToggleCorner.Parent = flyToggleButton
-
-            local speedLabel = Instance.new("TextLabel")
-            speedLabel.Parent = contentFrame
-            speedLabel.Size = UDim2.new(1, 0, 0, 20)
-            speedLabel.Position = UDim2.new(0, 0, 0.15, 0)
-            speedLabel.BackgroundTransparency = 1
-            speedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-            speedLabel.Font = Enum.Font.Gotham
-            speedLabel.TextSize = 14
-            speedLabel.Text = "Velocidad: " .. flySpeed
-            speedLabel.ZIndex = 2
-
-            local increaseSpeedButton = Instance.new("TextButton")
-            increaseSpeedButton.Parent = contentFrame
-            increaseSpeedButton.Size = UDim2.new(0.35, 0, 0, 30)
-            increaseSpeedButton.Position = UDim2.new(0.1, 0, 0.25, 0)
-            increaseSpeedButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            increaseSpeedButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            increaseSpeedButton.Font = Enum.Font.Gotham
-            increaseSpeedButton.TextSize = 14
-            increaseSpeedButton.Text = "+"
-            increaseSpeedButton.ZIndex = 3
-            local increaseSpeedCorner = Instance.new("UICorner")
-            increaseSpeedCorner.CornerRadius = UDim.new(0, 6)
-            increaseSpeedCorner.Parent = increaseSpeedButton
-
-            local decreaseSpeedButton = Instance.new("TextButton")
-            decreaseSpeedButton.Parent = contentFrame
-            decreaseSpeedButton.Size = UDim2.new(0.35, 0, 0, 30)
-            decreaseSpeedButton.Position = UDim2.new(0.55, 0, 0.25, 0)
-            decreaseSpeedButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            decreaseSpeedButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            decreaseSpeedButton.Font = Enum.Font.Gotham
-            decreaseSpeedButton.TextSize = 14
-            decreaseSpeedButton.Text = "-"
-            decreaseSpeedButton.ZIndex = 3
-            local decreaseSpeedCorner = Instance.new("UICorner")
-            decreaseSpeedCorner.CornerRadius = UDim.new(0, 6)
-            decreaseSpeedCorner.Parent = decreaseSpeedButton
-
+        elseif tabName == "Up/Down" then
             local upButton = Instance.new("TextButton")
             upButton.Parent = contentFrame
-            upButton.Size = UDim2.new(0.35, 0, 0, 30)
-            upButton.Position = UDim2.new(0.1, 0, 0.4, 0)
+            upButton.Size = UDim2.new(0.35, 0, 0, 40)
+            upButton.Position = UDim2.new(0.1, 0, 0, 0)
             upButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
             upButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            upButton.Font = Enum.Font.Gotham
-            upButton.TextSize = 14
+            upButton.Font = Enum.Font.SourceSans
+            upButton.TextSize = 16
             upButton.Text = "Subir"
             upButton.ZIndex = 3
-            local upButtonCorner = Instance.new("UICorner")
-            upButtonCorner.CornerRadius = UDim.new(0, 6)
-            upButtonCorner.Parent = upButton
+            local upCorner = Instance.new("UICorner")
+            upCorner.CornerRadius = UDim.new(0, 6)
+            upCorner.Parent = upButton
 
             local downButton = Instance.new("TextButton")
             downButton.Parent = contentFrame
-            downButton.Size = UDim2.new(0.35, 0, 0, 30)
-            downButton.Position = UDim2.new(0.55, 0, 0.4, 0)
+            downButton.Size = UDim2.new(0.35, 0, 0, 40)
+            downButton.Position = UDim2.new(0.55, 0, 0, 0)
             downButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
             downButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            downButton.Font = Enum.Font.Gotham
-            downButton.TextSize = 14
+            downButton.Font = Enum.Font.SourceSans
+            downButton.TextSize = 16
             downButton.Text = "Bajar"
             downButton.ZIndex = 3
-            local downButtonCorner = Instance.new("UICorner")
-            downButtonCorner.CornerRadius = UDim.new(0, 6)
-            downButtonCorner.Parent = downButton
+            local downCorner = Instance.new("UICorner")
+            downCorner.CornerRadius = UDim.new(0, 6)
+            downCorner.Parent = downButton
 
-            flyToggleButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Botón Fly clickeado"
-                toggleFly()
-                flyToggleButton.Text = flyEnabled and "Desactivar Fly" or "Activar Fly"
-            end)
-            increaseSpeedButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Aumentar velocidad clickeado"
-                flySpeed = math.clamp(flySpeed + 10, 10, 200)
-                speedLabel.Text = "Velocidad: " .. flySpeed
-            end)
-            decreaseSpeedButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Disminuir velocidad clickeado"
-                flySpeed = math.clamp(flySpeed - 10, 10, 200)
-                speedLabel.Text = "Velocidad: " .. flySpeed
-            end)
             upButton.MouseButton1Click:Connect(function()
                 debugLabel.Text = "Botón Subir clickeado"
-                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    player.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 10, 0)
-                end
+                moveVertical(1)
             end)
             downButton.MouseButton1Click:Connect(function()
                 debugLabel.Text = "Botón Bajar clickeado"
-                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    player.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, -10, 0)
-                end
-            end)
-        elseif tabName == "NoClip" then
-            local noClipToggleButton = Instance.new("TextButton")
-            noClipToggleButton.Parent = contentFrame
-            noClipToggleButton.Size = UDim2.new(0.8, 0, 0, 40)
-            noClipToggleButton.Position = UDim2.new(0.1, 0, 0, 0)
-            noClipToggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            noClipToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            noClipToggleButton.Font = Enum.Font.Gotham
-            noClipToggleButton.TextSize = 16
-            noClipToggleButton.Text = noClipEnabled and "Desactivar NoClip" or "Activar NoClip"
-            noClipToggleButton.ZIndex = 3
-            local corner = Instance.new("UICorner")
-            corner.CornerRadius = UDim.new(0, 6)
-            corner.Parent = noClipToggleButton
-
-            noClipToggleButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Botón NoClip clickeado"
-                toggleNoClip()
-                noClipToggleButton.Text = noClipEnabled and "Desactivar NoClip" or "Activar NoClip"
+                moveVertical(-1)
             end)
         elseif tabName == "Speed" then
             local speedLabel = Instance.new("TextLabel")
@@ -763,38 +506,38 @@ local success, errorMsg = pcall(function()
             speedLabel.Position = UDim2.new(0, 0, 0, 0)
             speedLabel.BackgroundTransparency = 1
             speedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-            speedLabel.Font = Enum.Font.Gotham
+            speedLabel.Font = Enum.Font.SourceSans
             speedLabel.TextSize = 14
             speedLabel.Text = "Velocidad: " .. walkSpeed
             speedLabel.ZIndex = 2
 
             local increaseSpeedButton = Instance.new("TextButton")
             increaseSpeedButton.Parent = contentFrame
-            increaseSpeedButton.Size = UDim2.new(0.35, 0, 0, 30)
+            increaseSpeedButton.Size = UDim2.new(0.35, 0, 0, 40)
             increaseSpeedButton.Position = UDim2.new(0.1, 0, 0.1, 0)
             increaseSpeedButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
             increaseSpeedButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            increaseSpeedButton.Font = Enum.Font.Gotham
-            increaseSpeedButton.TextSize = 14
+            increaseSpeedButton.Font = Enum.Font.SourceSans
+            increaseSpeedButton.TextSize = 16
             increaseSpeedButton.Text = "+"
             increaseSpeedButton.ZIndex = 3
-            local increaseSpeedCorner = Instance.new("UICorner")
-            increaseSpeedCorner.CornerRadius = UDim.new(0, 6)
-            increaseSpeedCorner.Parent = increaseSpeedButton
+            local increaseCorner = Instance.new("UICorner")
+            increaseCorner.CornerRadius = UDim.new(0, 6)
+            increaseCorner.Parent = increaseSpeedButton
 
             local decreaseSpeedButton = Instance.new("TextButton")
             decreaseSpeedButton.Parent = contentFrame
-            decreaseSpeedButton.Size = UDim2.new(0.35, 0, 0, 30)
+            decreaseSpeedButton.Size = UDim2.new(0.35, 0, 0, 40)
             decreaseSpeedButton.Position = UDim2.new(0.55, 0, 0.1, 0)
             decreaseSpeedButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
             decreaseSpeedButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            decreaseSpeedButton.Font = Enum.Font.Gotham
-            decreaseSpeedButton.TextSize = 14
+            decreaseSpeedButton.Font = Enum.Font.SourceSans
+            decreaseSpeedButton.TextSize = 16
             decreaseSpeedButton.Text = "-"
             decreaseSpeedButton.ZIndex = 3
-            local decreaseSpeedCorner = Instance.new("UICorner")
-            decreaseSpeedCorner.CornerRadius = UDim.new(0, 6)
-            decreaseSpeedCorner.Parent = decreaseSpeedButton
+            local decreaseCorner = Instance.new("UICorner")
+            decreaseCorner.CornerRadius = UDim.new(0, 6)
+            decreaseCorner.Parent = decreaseSpeedButton
 
             increaseSpeedButton.MouseButton1Click:Connect(function()
                 debugLabel.Text = "Aumentar velocidad clickeado"
@@ -806,149 +549,6 @@ local success, errorMsg = pcall(function()
                 updateSpeed(-10)
                 speedLabel.Text = "Velocidad: " .. walkSpeed
             end)
-        elseif tabName == "Combat" then
-            local killAuraToggleButton = Instance.new("TextButton")
-            killAuraToggleButton.Parent = contentFrame
-            killAuraToggleButton.Size = UDim2.new(0.8, 0, 0, 40)
-            killAuraToggleButton.Position = UDim2.new(0.1, 0, 0, 0)
-            killAuraToggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            killAuraToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            killAuraToggleButton.Font = Enum.Font.Gotham
-            killAuraToggleButton.TextSize = 16
-            killAuraToggleButton.Text = killAuraEnabled and "Desactivar Kill Aura" or "Activar Kill Aura"
-            killAuraToggleButton.ZIndex = 3
-            local killAuraCorner = Instance.new("UICorner")
-            killAuraCorner.CornerRadius = UDim.new(0, 6)
-            killAuraCorner.Parent = killAuraToggleButton
-
-            local aimbotToggleButton = Instance.new("TextButton")
-            aimbotToggleButton.Parent = contentFrame
-            aimbotToggleButton.Size = UDim2.new(0.8, 0, 0, 40)
-            aimbotToggleButton.Position = UDim2.new(0.1, 0, 0.15, 0)
-            aimbotToggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            aimbotToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            aimbotToggleButton.Font = Enum.Font.Gotham
-            aimbotToggleButton.TextSize = 16
-            aimbotToggleButton.Text = aimbotEnabled and "Desactivar Aimbot" or "Activar Aimbot"
-            aimbotToggleButton.ZIndex = 3
-            local aimbotCorner = Instance.new("UICorner")
-            aimbotCorner.CornerRadius = UDim.new(0, 6)
-            aimbotCorner.Parent = aimbotToggleButton
-
-            local aimPartLabel = Instance.new("TextLabel")
-            aimPartLabel.Parent = contentFrame
-            aimPartLabel.Size = UDim2.new(1, 0, 0, 20)
-            aimPartLabel.Position = UDim2.new(0, 0, 0.3, 0)
-            aimPartLabel.BackgroundTransparency = 1
-            aimPartLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-            aimPartLabel.Font = Enum.Font.Gotham
-            aimPartLabel.TextSize = 14
-            aimPartLabel.Text = "Parte a Apuntar: " .. aimPart
-            aimPartLabel.ZIndex = 2
-
-            local headButton = Instance.new("TextButton")
-            headButton.Parent = contentFrame
-            headButton.Size = UDim2.new(0.35, 0, 0, 30)
-            headButton.Position = UDim2.new(0.1, 0, 0.4, 0)
-            headButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            headButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            headButton.Font = Enum.Font.Gotham
-            headButton.TextSize = 14
-            headButton.Text = "Cabeza"
-            headButton.ZIndex = 3
-            local headCorner = Instance.new("UICorner")
-            headCorner.CornerRadius = UDim.new(0, 6)
-            headCorner.Parent = headButton
-
-            local torsoButton = Instance.new("TextButton")
-            torsoButton.Parent = contentFrame
-            torsoButton.Size = UDim2.new(0.35, 0, 0, 30)
-            torsoButton.Position = UDim2.new(0.55, 0, 0.4, 0)
-            torsoButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            torsoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            torsoButton.Font = Enum.Font.Gotham
-            torsoButton.TextSize = 14
-            torsoButton.Text = "Torso"
-            torsoButton.ZIndex = 3
-            local torsoCorner = Instance.new("UICorner")
-            torsoCorner.CornerRadius = UDim.new(0, 6)
-            torsoCorner.Parent = torsoButton
-
-            local fovLabel = Instance.new("TextLabel")
-            fovLabel.Parent = contentFrame
-            fovLabel.Size = UDim2.new(1, 0, 0, 20)
-            fovLabel.Position = UDim2.new(0, 0, 0.55, 0)
-            fovLabel.BackgroundTransparency = 1
-            fovLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-            fovLabel.Font = Enum.Font.Gotham
-            fovLabel.TextSize = 14
-            fovLabel.Text = "FOV: " .. aimFOV
-            fovLabel.ZIndex = 2
-
-            local increaseFOVButton = Instance.new("TextButton")
-            increaseFOVButton.Parent = contentFrame
-            increaseFOVButton.Size = UDim2.new(0.35, 0, 0, 30)
-            increaseFOVButton.Position = UDim2.new(0.1, 0, 0.65, 0)
-            increaseFOVButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            increaseFOVButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            increaseFOVButton.Font = Enum.Font.Gotham
-            increaseFOVButton.TextSize = 14
-            increaseFOVButton.Text = "+"
-            increaseFOVButton.ZIndex = 3
-            local increaseFOVCorner = Instance.new("UICorner")
-            increaseFOVCorner.CornerRadius = UDim.new(0, 6)
-            increaseFOVCorner.Parent = increaseFOVButton
-
-            local decreaseFOVButton = Instance.new("TextButton")
-            decreaseFOVButton.Parent = contentFrame
-            decreaseFOVButton.Size = UDim2.new(0.35, 0, 0, 30)
-            decreaseFOVButton.Position = UDim2.new(0.55, 0, 0.65, 0)
-            decreaseFOVButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-            decreaseFOVButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-            decreaseFOVButton.Font = Enum.Font.Gotham
-            decreaseFOVButton.TextSize = 14
-            decreaseFOVButton.Text = "-"
-            decreaseFOVButton.ZIndex = 3
-            local decreaseFOVCorner = Instance.new("UICorner")
-            decreaseFOVCorner.CornerRadius = UDim.new(0, 6)
-            decreaseFOVCorner.Parent = decreaseFOVButton
-
-            killAuraToggleButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Botón Kill Aura clickeado"
-                toggleKillAura()
-                killAuraToggleButton.Text = killAuraEnabled and "Desactivar Kill Aura" or "Activar Kill Aura"
-            end)
-            aimbotToggleButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Botón Aimbot clickeado"
-                toggleAimbot()
-                aimbotToggleButton.Text = aimbotEnabled and "Desactivar Aimbot" or "Activar Aimbot"
-            end)
-            headButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Botón Cabeza clickeado"
-                aimPart = "Head"
-                aimPartLabel.Text = "Parte a Apuntar: " .. aimPart
-            end)
-            torsoButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Botón Torso clickeado"
-                aimPart = "HumanoidRootPart"
-                aimPartLabel.Text = "Parte a Apuntar: " .. aimPart
-            end)
-            increaseFOVButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Aumentar FOV clickeado"
-                aimFOV = math.clamp(aimFOV + 10, 50, 200)
-                fovLabel.Text = "FOV: " .. aimFOV
-            end)
-            decreaseFOVButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Disminuir FOV clickeado"
-                aimFOV = math.clamp(aimFOV - 10, 50, 200)
-                fovLabel.Text = "FOV: " .. aimFOV
-            end)
-        end
-    end
-
-    local function clearContent()
-        for _, child in ipairs(contentFrame:GetChildren()) do
-            child:Destroy()
         end
     end
 
@@ -995,12 +595,15 @@ local success, errorMsg = pcall(function()
 
     closeButton.MouseButton1Click:Connect(function()
         debugLabel.Text = "Botón Cerrar clickeado"
+        if espConnection then
+            espConnection:Disconnect()
+        end
+        for _, data in pairs(espObjects) do
+            for _, obj in pairs(data) do
+                obj:Destroy()
+            end
+        end
         screenGui:Destroy()
-        if espConnection then espConnection:Disconnect() end
-        stopFly()
-        toggleNoClip()
-        toggleKillAura()
-        toggleAimbot()
     end)
 
     minimizeButton.MouseButton1Click:Connect(function()
@@ -1059,7 +662,7 @@ if not success then
         errorLabel.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
         errorLabel.BackgroundTransparency = 0.5
         errorLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        errorLabel.Font = Enum.Font.GothamBold
+        errorLabel.Font = Enum.Font.SourceSansBold
         errorLabel.TextSize = 20
         errorLabel.Text = "Error: " .. tostring(errorMsg)
         errorLabel.TextWrapped = true
