@@ -111,6 +111,22 @@ local success, errorMsg = pcall(function()
     closeCorner.CornerRadius = UDim.new(0, 6)
     closeCorner.Parent = closeButton
 
+    local minimizeButton = Instance.new("TextButton")
+    minimizeButton.Parent = frame
+    minimizeButton.Size = UDim2.new(0, 30, 0, 30)
+    minimizeButton.Position = UDim2.new(1, -80, 0, 5)
+    minimizeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
+    minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    minimizeButton.Text = "-"
+    minimizeButton.Font = Enum.Font.GothamBold
+    minimizeButton.TextSize = 16
+    minimizeButton.ZIndex = 3
+    print("Bot車n Minimizar creado")
+
+    local minimizeCorner = Instance.new("UICorner")
+    minimizeCorner.CornerRadius = UDim.new(0, 6)
+    minimizeCorner.Parent = minimizeButton
+
     local footerLabel = Instance.new("TextLabel")
     footerLabel.Parent = frame
     footerLabel.Size = UDim2.new(1, 0, 0, 20)
@@ -153,6 +169,8 @@ local success, errorMsg = pcall(function()
     customizeFrame.BorderSizePixel = 0
     customizeFrame.Visible = false
     customizeFrame.ZIndex = 1
+    customizeFrame.Active = true
+    customizeFrame.Draggable = true
     print("CustomizeFrame creado")
 
     local customizeFrameCorner = Instance.new("UICorner")
@@ -169,6 +187,22 @@ local success, errorMsg = pcall(function()
     customizeTitle.Text = "Personalizar Chams"
     customizeTitle.ZIndex = 2
     print("T赤tulo de personalizaci車n creado")
+
+    local backButtonCustomize = Instance.new("TextButton")
+    backButtonCustomize.Parent = customizeFrame
+    backButtonCustomize.Size = UDim2.new(0, 30, 0, 30)
+    backButtonCustomize.Position = UDim2.new(1, -40, 0, 5)
+    backButtonCustomize.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
+    backButtonCustomize.TextColor3 = Color3.fromRGB(255, 255, 255)
+    backButtonCustomize.Text = "<"
+    backButtonCustomize.Font = Enum.Font.GothamBold
+    backButtonCustomize.TextSize = 16
+    backButtonCustomize.ZIndex = 3
+    print("Bot車n Volver de personalizaci車n creado")
+
+    local backCornerCustomize = Instance.new("UICorner")
+    backCornerCustomize.CornerRadius = UDim.new(0, 6)
+    backCornerCustomize.Parent = backButtonCustomize
 
     local outlineColorLabel = Instance.new("TextLabel")
     outlineColorLabel.Parent = customizeFrame
@@ -262,6 +296,8 @@ local success, errorMsg = pcall(function()
     flyFrame.BorderSizePixel = 0
     flyFrame.Visible = false
     flyFrame.ZIndex = 1
+    flyFrame.Active = true
+    flyFrame.Draggable = true
     print("FlyFrame creado")
 
     local flyFrameCorner = Instance.new("UICorner")
@@ -278,6 +314,22 @@ local success, errorMsg = pcall(function()
     flyTitle.Text = "Fly Control"
     flyTitle.ZIndex = 2
     print("T赤tulo de fly creado")
+
+    local backButtonFly = Instance.new("TextButton")
+    backButtonFly.Parent = flyFrame
+    backButtonFly.Size = UDim2.new(0, 30, 0, 30)
+    backButtonFly.Position = UDim2.new(1, -40, 0, 5)
+    backButtonFly.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
+    backButtonFly.TextColor3 = Color3.fromRGB(255, 255, 255)
+    backButtonFly.Text = "<"
+    backButtonFly.Font = Enum.Font.GothamBold
+    backButtonFly.TextSize = 16
+    backButtonFly.ZIndex = 3
+    print("Bot車n Volver de fly creado")
+
+    local backCornerFly = Instance.new("UICorner")
+    backCornerFly.CornerRadius = UDim.new(0, 6)
+    backCornerFly.Parent = backButtonFly
 
     local flyToggleButton = Instance.new("TextButton")
     flyToggleButton.Parent = flyFrame
@@ -353,7 +405,7 @@ local success, errorMsg = pcall(function()
 
     local downButton = Instance.new("TextButton")
     downButton.Parent = flyFrame
-    downButton.Size = UDim2.new(0, 30, 0, 0)
+    downButton.Size = UDim2.new(0.35, 0, 0, 30)
     downButton.Position = UDim2.new(0.55, 0, 0.65, 0)
     downButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
     downButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -373,7 +425,7 @@ local success, errorMsg = pcall(function()
     local maxDistance = 1000
     local outlineColor = Color3.fromRGB(255, 255, 255)
     local fillEnabled = false
-    local fillColor = Color3.fromRGB(255, 255,255)
+    local fillColor = Color3.fromRGB(255, 255, 255)
     local fillTransparency = 0.5
 
     local function applyESP(character)
@@ -411,7 +463,7 @@ local success, errorMsg = pcall(function()
             local health = humanoid and math.floor(humanoid.Health) or 0
             local maxHealth = humanoid and math.floor(humanoid.MaxHealth) or 100
             local distance = player.Character and player.Character:FindFirstChild("HumanoidRootPart") and 
-                (character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude or 0
+                            (character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude or 0
             textLabel.Text = string.format("%s | %.1fm | %d/%d HP | %s", teamName, distance, health, maxHealth, plr.Name)
         end
 
@@ -434,8 +486,7 @@ local success, errorMsg = pcall(function()
                         local teamName = plr.Team and plr.Team.Name or "No Team"
                         local health = math.floor(humanoid.Health)
                         local maxHealth = math.floor(humanoid.MaxHealth)
-                        espData[3].Text = string.format("%s | %.1fm | %d/%d HP | %s", teamName, distance, health, 
-maxHealth, plr.Name)
+                        espData[3].Text = string.format("%s | %.1fm | %d/%d HP | %s", teamName, distance, health, maxHealth, plr.Name)
                         espData[1].Enabled = true
                         espData[2].Enabled = true
                     else
@@ -540,7 +591,7 @@ maxHealth, plr.Name)
             if userInputService:IsKeyDown(Enum.KeyCode.D) then
                 moveDirection = moveDirection + Vector3.new(1, 0, 0)
             end
-            if userInputService:IsKeyDown(Enum.KeyCode.S) then
+            if userInputService:IsKeyDown(Enum.KeyCode.Space) then
                 moveDirection = moveDirection + Vector3.new(0, 1, 0)
             end
             if userInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
@@ -557,15 +608,15 @@ maxHealth, plr.Name)
 
     local function stopFly()
         if bodyVelocity then
-            bodyVelocity.Destroy()
+            bodyVelocity:Destroy()
             bodyVelocity = nil
         end
         if bodyGyro then
-            bodyGyro.Destroy()
+            bodyGyro:Destroy()
             bodyGyro = nil
         end
         if flyConnection then
-            flyConnection.Disconnect()
+            flyConnection:Disconnect()
             flyConnection = nil
         end
         print("Fly detenido")
@@ -596,6 +647,31 @@ maxHealth, plr.Name)
         local offset = direction == "up" and Vector3.new(0, 10, 0) or Vector3.new(0, -10, 0)
         rootPart.CFrame = rootPart.CFrame + offset
         print("Teletransportado ", direction)
+    end
+
+    -- Minimization Logic
+    local isMinimized = false
+    local function toggleMinimize()
+        isMinimized = not isMinimized
+        if isMinimized then
+            frame.Size = UDim2.new(0, 220, 0, 40)
+            espButton.Visible = false
+            customizeButton.Visible = false
+            flyButton.Visible = false
+            closeButton.Visible = false
+            footerLabel.Visible = false
+            minimizeButton.Text = "+"
+            print("Men迆 minimizado")
+        else
+            frame.Size = UDim2.new(0, 220, 0, 250)
+            espButton.Visible = true
+            customizeButton.Visible = true
+            flyButton.Visible = true
+            closeButton.Visible = true
+            footerLabel.Visible = true
+            minimizeButton.Text = "-"
+            print("Men迆 restaurado")
+        end
     end
 
     -- Event Handlers with Debugging
@@ -631,6 +707,28 @@ maxHealth, plr.Name)
     end)
     print("Evento de Bot車n Cerrar conectado")
 
+    minimizeButton.MouseButton1Click:Connect(function()
+        print("Bot車n Minimizar clickeado")
+        toggleMinimize()
+    end)
+    print("Evento de Bot車n Minimizar conectado")
+
+    backButtonCustomize.MouseButton1Click:Connect(function()
+        print("Bot車n Volver de personalizaci車n clickeado")
+        customizeFrame.Visible = false
+        frame.Visible = true
+        flyFrame.Visible = false
+    end)
+    print("Evento de Bot車n Volver de personalizaci車n conectado")
+
+    backButtonFly.MouseButton1Click:Connect(function()
+        print("Bot車n Volver de fly clickeado")
+        flyFrame.Visible = false
+        frame.Visible = true
+        customizeFrame.Visible = false
+    end)
+    print("Evento de Bot車n Volver de fly conectado")
+
     userInputService.InputBegan:Connect(function(input, gameProcessed)
         if gameProcessed then return end
         if input.KeyCode == Enum.KeyCode.E then
@@ -638,6 +736,9 @@ maxHealth, plr.Name)
             frame.Visible = not frame.Visible
             customizeFrame.Visible = false
             flyFrame.Visible = false
+            if isMinimized then
+                toggleMinimize()
+            end
         end
     end)
     print("Evento de Tecla E conectado")
