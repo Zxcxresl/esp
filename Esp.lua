@@ -17,6 +17,7 @@ local success, errorMsg = pcall(function()
     screenGui.Parent = playerGui
     screenGui.Name = "ESP_Toggle"
     screenGui.ResetOnSpawn = false
+    screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     print("ScreenGui creado")
 
     local frame = Instance.new("Frame")
@@ -27,6 +28,7 @@ local success, errorMsg = pcall(function()
     frame.BorderSizePixel = 0
     frame.Active = true
     frame.Draggable = true
+    frame.ZIndex = 1
     print("Frame creado")
 
     local frameCorner = Instance.new("UICorner")
@@ -40,9 +42,10 @@ local success, errorMsg = pcall(function()
     title.TextColor3 = Color3.fromRGB(255, 255, 255)
     title.Font = Enum.Font.GothamBold
     title.TextSize = 16
-    title.Text = "馃攳 ESP Menu by Zxcx"
+    title.Text = "🔍 ESP Menu by Zxcx"
     title.TextStrokeTransparency = 0.8
-    print("T铆tulo creado")
+    title.ZIndex = 2
+    print("Título creado")
 
     local espButton = Instance.new("TextButton")
     espButton.Parent = frame
@@ -53,7 +56,8 @@ local success, errorMsg = pcall(function()
     espButton.Font = Enum.Font.Gotham
     espButton.TextSize = 16
     espButton.Text = "Activar ESP"
-    print("Bot贸n ESP creado")
+    espButton.ZIndex = 3
+    print("Botón ESP creado")
 
     local buttonCorner = Instance.new("UICorner")
     buttonCorner.CornerRadius = UDim.new(0, 6)
@@ -68,7 +72,8 @@ local success, errorMsg = pcall(function()
     customizeButton.Font = Enum.Font.Gotham
     customizeButton.TextSize = 16
     customizeButton.Text = "Personalizar Chams"
-    print("Bot贸n Personalizar creado")
+    customizeButton.ZIndex = 3
+    print("Botón Personalizar creado")
 
     local customizeButtonCorner = Instance.new("UICorner")
     customizeButtonCorner.CornerRadius = UDim.new(0, 6)
@@ -82,8 +87,9 @@ local success, errorMsg = pcall(function()
     flyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     flyButton.Font = Enum.Font.Gotham
     flyButton.TextSize = 16
-    flyButton.Text = "Activar Fly"
-    print("Bot贸n Fly creado")
+    flyButton.Text = "Fly Control"
+    flyButton.ZIndex = 3
+    print("Botón Fly creado")
 
     local flyButtonCorner = Instance.new("UICorner")
     flyButtonCorner.CornerRadius = UDim.new(0, 6)
@@ -98,7 +104,8 @@ local success, errorMsg = pcall(function()
     closeButton.Text = "X"
     closeButton.Font = Enum.Font.GothamBold
     closeButton.TextSize = 16
-    print("Bot贸n Cerrar creado")
+    closeButton.ZIndex = 3
+    print("Botón Cerrar creado")
 
     local closeCorner = Instance.new("UICorner")
     closeCorner.CornerRadius = UDim.new(0, 6)
@@ -114,6 +121,7 @@ local success, errorMsg = pcall(function()
     footerLabel.TextStrokeTransparency = 0.5
     footerLabel.Text = "Made by Zxcx ot"
     footerLabel.TextXAlignment = Enum.TextXAlignment.Center
+    footerLabel.ZIndex = 2
     print("Footer creado")
 
     local colors = {
@@ -134,7 +142,7 @@ local success, errorMsg = pcall(function()
             currentIndex = 1
         end
     end)
-    print("Animaci贸n del footer iniciada")
+    print("Animación del footer iniciada")
 
     -- Customization Menu
     local customizeFrame = Instance.new("Frame")
@@ -144,6 +152,7 @@ local success, errorMsg = pcall(function()
     customizeFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
     customizeFrame.BorderSizePixel = 0
     customizeFrame.Visible = false
+    customizeFrame.ZIndex = 1
     print("CustomizeFrame creado")
 
     local customizeFrameCorner = Instance.new("UICorner")
@@ -158,7 +167,8 @@ local success, errorMsg = pcall(function()
     customizeTitle.Font = Enum.Font.GothamBold
     customizeTitle.TextSize = 16
     customizeTitle.Text = "Personalizar Chams"
-    print("T铆tulo de personalizaci贸n creado")
+    customizeTitle.ZIndex = 2
+    print("Título de personalización creado")
 
     local outlineColorLabel = Instance.new("TextLabel")
     outlineColorLabel.Parent = customizeFrame
@@ -169,6 +179,7 @@ local success, errorMsg = pcall(function()
     outlineColorLabel.Font = Enum.Font.Gotham
     outlineColorLabel.TextSize = 14
     outlineColorLabel.Text = "Color del Borde"
+    outlineColorLabel.ZIndex = 2
     print("Label de color del borde creado")
 
     local outlineColorButtons = {}
@@ -179,6 +190,7 @@ local success, errorMsg = pcall(function()
         button.Position = UDim2.new(0.1 + (i-1) * 0.15, 0, 0.25, 0)
         button.BackgroundColor3 = color
         button.Text = ""
+        button.ZIndex = 3
         local corner = Instance.new("UICorner")
         corner.CornerRadius = UDim.new(0, 6)
         corner.Parent = button
@@ -195,6 +207,7 @@ local success, errorMsg = pcall(function()
     fillToggleLabel.Font = Enum.Font.Gotham
     fillToggleLabel.TextSize = 14
     fillToggleLabel.Text = "Relleno Activado"
+    fillToggleLabel.ZIndex = 2
     print("Label de relleno creado")
 
     local fillToggleButton = Instance.new("TextButton")
@@ -206,10 +219,11 @@ local success, errorMsg = pcall(function()
     fillToggleButton.Font = Enum.Font.Gotham
     fillToggleButton.TextSize = 14
     fillToggleButton.Text = "Off"
+    fillToggleButton.ZIndex = 3
     local fillToggleCorner = Instance.new("UICorner")
     fillToggleCorner.CornerRadius = UDim.new(0, 6)
     fillToggleCorner.Parent = fillToggleButton
-    print("Bot贸n de relleno creado")
+    print("Botón de relleno creado")
 
     local fillColorLabel = Instance.new("TextLabel")
     fillColorLabel.Parent = customizeFrame
@@ -220,6 +234,7 @@ local success, errorMsg = pcall(function()
     fillColorLabel.Font = Enum.Font.Gotham
     fillColorLabel.TextSize = 14
     fillColorLabel.Text = "Color del Relleno"
+    fillColorLabel.ZIndex = 2
     print("Label de color de relleno creado")
 
     local fillColorButtons = {}
@@ -230,6 +245,7 @@ local success, errorMsg = pcall(function()
         button.Position = UDim2.new(0.1 + (i-1) * 0.15, 0, 0.75, 0)
         button.BackgroundColor3 = color
         button.Text = ""
+        button.ZIndex = 3
         local corner = Instance.new("UICorner")
         corner.CornerRadius = UDim.new(0, 6)
         corner.Parent = button
@@ -245,6 +261,7 @@ local success, errorMsg = pcall(function()
     flyFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
     flyFrame.BorderSizePixel = 0
     flyFrame.Visible = false
+    flyFrame.ZIndex = 1
     print("FlyFrame creado")
 
     local flyFrameCorner = Instance.new("UICorner")
@@ -252,14 +269,15 @@ local success, errorMsg = pcall(function()
     flyFrameCorner.Parent = flyFrame
 
     local flyTitle = Instance.new("TextLabel")
-    respaldarTitle.Parent = flyFrame
+    flyTitle.Parent = flyFrame
     flyTitle.Size = UDim2.new(1, 0, 0, 30)
     flyTitle.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
     flyTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
     flyTitle.Font = Enum.Font.GothamBold
     flyTitle.TextSize = 16
     flyTitle.Text = "Fly Control"
-    print("T铆tulo de fly creado")
+    flyTitle.ZIndex = 2
+    print("Título de fly creado")
 
     local flyToggleButton = Instance.new("TextButton")
     flyToggleButton.Parent = flyFrame
@@ -270,10 +288,11 @@ local success, errorMsg = pcall(function()
     flyToggleButton.Font = Enum.Font.Gotham
     flyToggleButton.TextSize = 16
     flyToggleButton.Text = "Activar Fly"
+    flyToggleButton.ZIndex = 3
     local flyToggleCorner = Instance.new("UICorner")
     flyToggleCorner.CornerRadius = UDim.new(0, 6)
     flyToggleCorner.Parent = flyToggleButton
-    print("Bot贸n de fly creado")
+    print("Botón de fly creado")
 
     local speedLabel = Instance.new("TextLabel")
     speedLabel.Parent = flyFrame
@@ -284,6 +303,7 @@ local success, errorMsg = pcall(function()
     speedLabel.Font = Enum.Font.Gotham
     speedLabel.TextSize = 14
     speedLabel.Text = "Velocidad: 50"
+    speedLabel.ZIndex = 2
     print("Label de velocidad creado")
 
     local increaseSpeedButton = Instance.new("TextButton")
@@ -295,10 +315,11 @@ local success, errorMsg = pcall(function()
     increaseSpeedButton.Font = Enum.Font.Gotham
     increaseSpeedButton.TextSize = 14
     increaseSpeedButton.Text = "+"
+    increaseSpeedButton.ZIndex = 3
     local increaseSpeedCorner = Instance.new("UICorner")
     increaseSpeedCorner.CornerRadius = UDim.new(0, 6)
     increaseSpeedCorner.Parent = increaseSpeedButton
-    print("Bot贸n de aumentar velocidad creado")
+    print("Botón de aumentar velocidad creado")
 
     local decreaseSpeedButton = Instance.new("TextButton")
     decreaseSpeedButton.Parent = flyFrame
@@ -309,10 +330,11 @@ local success, errorMsg = pcall(function()
     decreaseSpeedButton.Font = Enum.Font.Gotham
     decreaseSpeedButton.TextSize = 14
     decreaseSpeedButton.Text = "-"
+    decreaseSpeedButton.ZIndex = 3
     local decreaseSpeedCorner = Instance.new("UICorner")
     decreaseSpeedCorner.CornerRadius = UDim.new(0, 6)
     decreaseSpeedCorner.Parent = decreaseSpeedButton
-    print("Bot贸n de disminuir velocidad creado")
+    print("Botón de disminuir velocidad creado")
 
     local upButton = Instance.new("TextButton")
     upButton.Parent = flyFrame
@@ -323,24 +345,26 @@ local success, errorMsg = pcall(function()
     upButton.Font = Enum.Font.Gotham
     upButton.TextSize = 14
     upButton.Text = "Subir"
+    upButton.ZIndex = 3
     local upButtonCorner = Instance.new("UICorner")
     upButtonCorner.CornerRadius = UDim.new(0, 6)
     upButtonCorner.Parent = upButton
-    print("Bot贸n de subir creado")
+    print("Botón de subir creado")
 
     local downButton = Instance.new("TextButton")
     downButton.Parent = flyFrame
-    downButton.Size = UDim2.new(0.35, 0, 0, 30)
+    downButton.Size = UDim2.new(0, 30, 0, 0)
     downButton.Position = UDim2.new(0.55, 0, 0.65, 0)
     downButton.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
     downButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     downButton.Font = Enum.Font.Gotham
     downButton.TextSize = 14
     downButton.Text = "Bajar"
+    downButton.ZIndex = 3
     local downButtonCorner = Instance.new("UICorner")
     downButtonCorner.CornerRadius = UDim.new(0, 6)
     downButtonCorner.Parent = downButton
-    print("Bot贸n de bajar creado")
+    print("Botón de bajar creado")
 
     -- ESP Logic
     local espEnabled = false
@@ -349,7 +373,7 @@ local success, errorMsg = pcall(function()
     local maxDistance = 1000
     local outlineColor = Color3.fromRGB(255, 255, 255)
     local fillEnabled = false
-    local fillColor = Color3.fromRGB(255, 255, 255)
+    local fillColor = Color3.fromRGB(255, 255,255)
     local fillTransparency = 0.5
 
     local function applyESP(character)
@@ -387,7 +411,7 @@ local success, errorMsg = pcall(function()
             local health = humanoid and math.floor(humanoid.Health) or 0
             local maxHealth = humanoid and math.floor(humanoid.MaxHealth) or 100
             local distance = player.Character and player.Character:FindFirstChild("HumanoidRootPart") and 
-                            (character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude or 0
+                (character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude or 0
             textLabel.Text = string.format("%s | %.1fm | %d/%d HP | %s", teamName, distance, health, maxHealth, plr.Name)
         end
 
@@ -410,7 +434,8 @@ local success, errorMsg = pcall(function()
                         local teamName = plr.Team and plr.Team.Name or "No Team"
                         local health = math.floor(humanoid.Health)
                         local maxHealth = math.floor(humanoid.MaxHealth)
-                        espData[3].Text = string.format("%s | %.1fm | %d/%d HP | %s", teamName, distance, health, maxHealth, plr.Name)
+                        espData[3].Text = string.format("%s | %.1fm | %d/%d HP | %s", teamName, distance, health, 
+maxHealth, plr.Name)
                         espData[1].Enabled = true
                         espData[2].Enabled = true
                     else
@@ -515,7 +540,7 @@ local success, errorMsg = pcall(function()
             if userInputService:IsKeyDown(Enum.KeyCode.D) then
                 moveDirection = moveDirection + Vector3.new(1, 0, 0)
             end
-            if userInputService:IsKeyDown(Enum.KeyCode.Space) then
+            if userInputService:IsKeyDown(Enum.KeyCode.S) then
                 moveDirection = moveDirection + Vector3.new(0, 1, 0)
             end
             if userInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
@@ -532,15 +557,15 @@ local success, errorMsg = pcall(function()
 
     local function stopFly()
         if bodyVelocity then
-            bodyVelocity:Destroy()
+            bodyVelocity.Destroy()
             bodyVelocity = nil
         end
         if bodyGyro then
-            bodyGyro:Destroy()
+            bodyGyro.Destroy()
             bodyGyro = nil
         end
         if flyConnection then
-            flyConnection:Disconnect()
+            flyConnection.Disconnect()
             flyConnection = nil
         end
         print("Fly detenido")
@@ -549,6 +574,7 @@ local success, errorMsg = pcall(function()
     local function toggleFly()
         flyEnabled = not flyEnabled
         flyToggleButton.Text = flyEnabled and "Desactivar Fly" or "Activar Fly"
+        print("Fly toggled: ", flyEnabled)
         if flyEnabled then
             startFly()
         else
@@ -572,42 +598,49 @@ local success, errorMsg = pcall(function()
         print("Teletransportado ", direction)
     end
 
-    -- Event Handlers
-    espButton.MouseButton1Click:Connect(toggleESP)
-    print("Bot贸n ESP conectado")
+    -- Event Handlers with Debugging
+    espButton.MouseButton1Click:Connect(function()
+        print("Botón ESP clickeado")
+        toggleESP()
+    end)
+    print("Evento de Botón ESP conectado")
 
     customizeButton.MouseButton1Click:Connect(function()
+        print("Botón Personalizar clickeado")
         frame.Visible = false
         customizeFrame.Visible = true
         flyFrame.Visible = false
-        print("Men煤 de personalizaci贸n abierto")
     end)
+    print("Evento de Botón Personalizar conectado")
 
     flyButton.MouseButton1Click:Connect(function()
+        print("Botón Fly clickeado")
         frame.Visible = false
         customizeFrame.Visible = false
         flyFrame.Visible = true
-        print("Men煤 de fly abierto")
     end)
+    print("Evento de Botón Fly conectado")
 
     closeButton.MouseButton1Click:Connect(function()
+        print("Botón Cerrar clickeado")
         screenGui:Destroy()
         if espConnection then
             espConnection:Disconnect()
         end
         stopFly()
-        print("Script cerrado")
     end)
+    print("Evento de Botón Cerrar conectado")
 
     userInputService.InputBegan:Connect(function(input, gameProcessed)
         if gameProcessed then return end
         if input.KeyCode == Enum.KeyCode.E then
+            print("Tecla E presionada")
             frame.Visible = not frame.Visible
             customizeFrame.Visible = false
             flyFrame.Visible = false
-            print("Men煤 principal toggled: ", frame.Visible)
         end
     end)
+    print("Evento de Tecla E conectado")
 
     game.Players.PlayerAdded:Connect(function(plr)
         if espEnabled and plr ~= player then
@@ -618,6 +651,7 @@ local success, errorMsg = pcall(function()
             end)
         end
     end)
+    print("Evento de PlayerAdded conectado")
 
     game.Players.PlayerRemoving:Connect(function(plr)
         if espObjects[plr.Character] then
@@ -627,48 +661,67 @@ local success, errorMsg = pcall(function()
             espObjects[plr.Character] = nil
         end
     end)
+    print("Evento de PlayerRemoving conectado")
 
     for i, button in ipairs(outlineColorButtons) do
         button.MouseButton1Click:Connect(function()
+            print("Botón de color de borde ", i, " clickeado")
             outlineColor = colors[i]
             updateChams()
-            print("Color del borde cambiado: ", i)
         end)
     end
+    print("Eventos de botones de color de borde conectados")
 
     fillToggleButton.MouseButton1Click:Connect(function()
+        print("Botón de relleno clickeado")
         fillEnabled = not fillEnabled
         fillToggleButton.Text = fillEnabled and "On" or "Off"
         updateChams()
-        print("Relleno toggled: ", fillEnabled)
     end)
+    print("Evento de Botón de relleno conectado")
 
     for i, button in ipairs(fillColorButtons) do
         button.MouseButton1Click:Connect(function()
+            print("Botón de color de relleno ", i, " clickeado")
             fillColor = colors[i]
             updateChams()
-            print("Color de relleno cambiado: ", i)
         end)
     end
+    print("Eventos de botones de color de relleno conectados")
 
-    flyToggleButton.MouseButton1Click:Connect(toggleFly)
+    flyToggleButton.MouseButton1Click:Connect(function()
+        print("Botón de toggle fly clickeado")
+        toggleFly()
+    end)
+    print("Evento de Botón de toggle fly conectado")
+
     increaseSpeedButton.MouseButton1Click:Connect(function()
+        print("Botón de aumentar velocidad clickeado")
         updateFlySpeed(10)
     end)
+    print("Evento de Botón de aumentar velocidad conectado")
+
     decreaseSpeedButton.MouseButton1Click:Connect(function()
+        print("Botón de disminuir velocidad clickeado")
         updateFlySpeed(-10)
     end)
+    print("Evento de Botón de disminuir velocidad conectado")
+
     upButton.MouseButton1Click:Connect(function()
+        print("Botón de subir clickeado")
         teleportUpDown("up")
     end)
+    print("Evento de Botón de subir conectado")
+
     downButton.MouseButton1Click:Connect(function()
+        print("Botón de bajar clickeado")
         teleportUpDown("down")
     end)
-    print("Eventos conectados")
+    print("Evento de Botón de bajar conectado")
 end)
 
 if not success then
-    warn("Error al ejecutar el script: " .. tostring(errorMsg))
+    warn("Error al ejecutar el script: ", tostring(errorMsg))
 else
     print("Script ejecutado correctamente")
 end
