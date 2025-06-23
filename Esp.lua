@@ -25,11 +25,11 @@ local success, errorMsg = pcall(function()
     debugLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     debugLabel.Font = Enum.Font.SourceSansBold
     debugLabel.TextSize = 16
-    debugLabel.Text = "Script cargado. Toca el bot¨®n 7§2 para abrir el men¨²."
+    debugLabel.Text = "Script cargado. Toca el botï¿½ï¿½n ï¿½7ï¿½2 para abrir el menï¿½ï¿½."
     debugLabel.ZIndex = 3
     debugLabel.Parent = screenGui
 
-    -- Crear Bot¨®n Flotante para Togglear
+    -- Crear Botï¿½ï¿½n Flotante para Togglear
     local toggleButton = Instance.new("TextButton")
     toggleButton.Size = UDim2.new(0, 50, 0, 50)
     toggleButton.Position = UDim2.new(1, -60, 0, 10)
@@ -37,7 +37,7 @@ local success, errorMsg = pcall(function()
     toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     toggleButton.Font = Enum.Font.SourceSansBold
     toggleButton.TextSize = 20
-    toggleButton.Text = "7§2"
+    toggleButton.Text = "ï¿½7ï¿½2"
     toggleButton.ZIndex = 4
     toggleButton.Parent = screenGui
     local toggleCorner = Instance.new("UICorner")
@@ -68,7 +68,7 @@ local success, errorMsg = pcall(function()
     title.TextColor3 = Color3.fromRGB(255, 255, 255)
     title.Font = Enum.Font.SourceSansBold
     title.TextSize = 16
-    title.Text = "”9ä3 Clip Menu by Zxcx"
+    title.Text = "ï¿½9ï¿½3 Clip Menu by Zxcx"
     title.ZIndex = 2
 
     local closeButton = Instance.new("TextButton")
@@ -294,7 +294,7 @@ local success, errorMsg = pcall(function()
     local function moveVertical(direction)
         if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
             local rootPart = player.Character.HumanoidRootPart
-            rootPart.CFrame = rootPart.CFrame + Vector3.new(0, direction * 50, 0)
+            rootPart.CFrame = rootPart.CFrame + Vector3.new(0, direction * 10, 0)
             debugLabel.Text = direction > 0 and "Subiendo" or "Bajando"
         else
             debugLabel.Text = "Personaje no disponible"
@@ -315,7 +315,7 @@ local success, errorMsg = pcall(function()
         for _, child in ipairs(contentFrame:GetChildren()) do
             child:Destroy()
         end
-        debugLabel.Text = "Pesta0Š9a " .. tabName .. " seleccionada"
+        debugLabel.Text = "Pestaï¿½0ï¿½9a " .. tabName .. " seleccionada"
         if tabName == "ESP" then
             local espToggleButton = Instance.new("TextButton")
             espToggleButton.Parent = contentFrame
@@ -426,18 +426,18 @@ local success, errorMsg = pcall(function()
             end
 
             espToggleButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Bot¨®n ESP clickeado"
+                debugLabel.Text = "Botï¿½ï¿½n ESP clickeado"
                 toggleESP()
                 espToggleButton.Text = espEnabled and "Desactivar ESP" or "Activar ESP"
             end)
             boxToggleButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Bot¨®n Box clickeado"
+                debugLabel.Text = "Botï¿½ï¿½n Box clickeado"
                 boxEnabled = not boxEnabled
                 boxToggleButton.Text = boxEnabled and "Desactivar Box" or "Activar Box"
                 updateChams()
             end)
             linesToggleButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Bot¨®n Lines clickeado"
+                debugLabel.Text = "Botï¿½ï¿½n Lines clickeado"
                 linesEnabled = not linesEnabled
                 linesToggleButton.Text = linesEnabled and "Desactivar Lines" or "Activar Lines"
                 updateChams()
@@ -450,7 +450,7 @@ local success, errorMsg = pcall(function()
                 end)
             end
             fillToggleButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Bot¨®n de relleno clickeado"
+                debugLabel.Text = "Botï¿½ï¿½n de relleno clickeado"
                 fillEnabled = not fillEnabled
                 fillToggleButton.Text = fillEnabled and "On" or "Off"
                 updateChams()
@@ -492,11 +492,11 @@ local success, errorMsg = pcall(function()
             downCorner.Parent = downButton
 
             upButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Bot¨®n Subir clickeado"
+                debugLabel.Text = "Botï¿½ï¿½n Subir clickeado"
                 moveVertical(1)
             end)
             downButton.MouseButton1Click:Connect(function()
-                debugLabel.Text = "Bot¨®n Bajar clickeado"
+                debugLabel.Text = "Botï¿½ï¿½n Bajar clickeado"
                 moveVertical(-1)
             end)
         elseif tabName == "Speed" then
@@ -554,7 +554,7 @@ local success, errorMsg = pcall(function()
 
     for tabName, button in pairs(tabButtons) do
         button.MouseButton1Click:Connect(function()
-            debugLabel.Text = "Pesta0Š9a " .. tabName .. " clickeada"
+            debugLabel.Text = "Pestaï¿½0ï¿½9a " .. tabName .. " clickeada"
             currentTab = tabName
             createTabContent(tabName)
             for _, btn in pairs(tabButtons) do
@@ -572,7 +572,7 @@ local success, errorMsg = pcall(function()
             tabFrame.Visible = false
             contentFrame.Visible = false
             minimizeButton.Text = "+"
-            debugLabel.Text = "Men¨² minimizado"
+            debugLabel.Text = "Menï¿½ï¿½ minimizado"
         else
             frame.Size = UDim2.new(0, 300, 0, 350)
             tabFrame.Visible = true
@@ -581,20 +581,20 @@ local success, errorMsg = pcall(function()
             if currentTab then
                 createTabContent(currentTab)
             end
-            debugLabel.Text = "Men¨² restaurado"
+            debugLabel.Text = "Menï¿½ï¿½ restaurado"
         end
     end
 
     local function toggleMenu()
         frame.Visible = not frame.Visible
-        debugLabel.Text = frame.Visible and "Men¨² abierto" or "Men¨² cerrado"
+        debugLabel.Text = frame.Visible and "Menï¿½ï¿½ abierto" or "Menï¿½ï¿½ cerrado"
         if isMinimized and frame.Visible then
             toggleMinimize()
         end
     end
 
     closeButton.MouseButton1Click:Connect(function()
-        debugLabel.Text = "Bot¨®n Cerrar clickeado"
+        debugLabel.Text = "Botï¿½ï¿½n Cerrar clickeado"
         if espConnection then
             espConnection:Disconnect()
         end
@@ -607,12 +607,12 @@ local success, errorMsg = pcall(function()
     end)
 
     minimizeButton.MouseButton1Click:Connect(function()
-        debugLabel.Text = "Bot¨®n Minimizar clickeado"
+        debugLabel.Text = "Botï¿½ï¿½n Minimizar clickeado"
         toggleMinimize()
     end)
 
     toggleButton.MouseButton1Click:Connect(function()
-        debugLabel.Text = "Bot¨®n de toggle clickeado"
+        debugLabel.Text = "Botï¿½ï¿½n de toggle clickeado"
         toggleMenu()
     end)
 
@@ -646,7 +646,7 @@ local success, errorMsg = pcall(function()
     createTabContent("ESP")
     tabButtons["ESP"].BackgroundColor3 = Color3.fromRGB(65, 65, 75)
     currentTab = "ESP"
-    debugLabel.Text = "Script cargado. Toca el bot¨®n 7§2 para abrir el men¨²."
+    debugLabel.Text = "Script cargado. Toca el botï¿½ï¿½n ï¿½7ï¿½2 para abrir el menï¿½ï¿½."
 end)
 
 if not success then
