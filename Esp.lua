@@ -1,25 +1,50 @@
-print("Script iniciado: " .. os.date())
 local success, errorMsg = pcall(function()
     local player = game.Players.LocalPlayer
-    print("Jugador local: ", player)
     local userInputService = game:GetService("UserInputService")
-    local teams = game:GetService("Teams")
     local runService = game:GetService("RunService")
 
     local playerGui = player:WaitForChild("PlayerGui", 5)
     if not playerGui then
-        warn("Error: PlayerGui no encontrado")
-        return
+        error("PlayerGui no encontrado")
     end
-    print("PlayerGui encontrado")
 
+    -- Crear ScreenGui
     local screenGui = Instance.new("ScreenGui")
-    screenGui.Parent = playerGui
     screenGui.Name = "ESP_Toggle"
     screenGui.ResetOnSpawn = false
     screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    print("ScreenGui creado")
+    screenGui.IgnoreGuiInset = true
+    screenGui.Parent = playerGui
 
+    -- Crear Debug Label
+    local debugLabel = Instance.new("TextLabel")
+    debugLabel.Size = UDim2.new(1, 0, 0, 30)
+    debugLabel.Position = UDim2.new(0, 0, 0, 0)
+    debugLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    debugLabel.BackgroundTransparency = 0.5
+    debugLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    debugLabel.Font = Enum.Font.Gotham
+    debugLabel.TextSize = 16
+    debugLabel.Text = "Script cargado. Toca el botón ☰ para abrir el menú."
+    debugLabel.ZIndex = 1000
+    debugLabel.Parent = screenGui
+
+    -- Crear Botón Flotante para Togglear Menú
+    local toggleButton = Instance.new("TextButton")
+    toggleButton.Size = UDim2.new(0, 50, 0, 50)
+    toggleButton.Position = UDim2.new(1, -60, 0, 10)
+    toggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 255)
+    toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    toggleButton.Font = Enum.Font.GothamBold
+    toggleButton.TextSize = 20
+    toggleButton.Text = "☰"
+    toggleButton.ZIndex = 1001
+    toggleButton.Parent = screenGui
+    local toggleCorner = Instance.new("UICorner")
+    toggleCorner.CornerRadius = UDim.new(0, 10)
+    toggleCorner.Parent = toggleButton
+
+    -- Crear Frame principal
     local frame = Instance.new("Frame")
     frame.Parent = screenGui
     frame.Size = UDim2.new(0, 300, 0, 350)
@@ -30,71 +55,7 @@ local success, errorMsg = pcall(function()
     frame.Active = true
     frame.Draggable = true
     frame.ZIndex = 1
-    print("Frame creado")
-
-    local frameCorner = Instance.new("UICorner")
-    frameCorner.CornerRadius = UDim.new(0, 10)
-    frameCorner.Parent = frame
-
-    local title = Instance.new("TextLabel")
-    title.Parent = frame
-    title.Size = UDim2.new(1, 0, 0, 30)
-    title.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
-    title.BackgroundTransparency = 0.5
-    title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    title.Font = Enum.Font.GothamBold
-    title.TextSize = 16
-    title.Text = "🔍 ESP Menu by Zxcx"
-    title.TextStrokeTransparency = 0.8
-    title.ZIndex = 2
-    print("Título creado")
-
-    local tabFrame = Instance.new("Frame")
-    tabFrame.Parent = frame
-    tabFrame.Size = UDim2.new(1, 0, 0, 40)
-    tabFrame.Position = UDim2.new(0, 0, 0, 30)
-    tabFrame.BackgroundTransparency = 1
-    tabFrame.ZIndex = 2
-    print("TabFrame creado")
-
-    local contentFrame = Instance.new("Frame")
-    contentFrame.Parent = frameSorry, I had to stop because the response was getting too long. Let me provide a concise version of the updated code with all the requested changes, focusing on the key modifications, and then explain how to test it.
-
----
-
-### **Código Actualizado (Conciso)**
-
-```lua
-print("Script iniciado: " .. os.date())
-local success, errorMsg = pcall(function()
-    local player = game.Players.LocalPlayer
-    local userInputService = game:GetService("UserInputService")
-    local runService = game:GetService("RunService")
-
-    local playerGui = player:WaitForChild("PlayerGui", 5)
-    if not playerGui then
-        warn("Error: PlayerGui no encontrado")
-        return
-    end
-    print("PlayerGui encontrado")
-
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.Parent = playerGui
-    screenGui.Name = "ESP_Toggle"
-    screenGui.ResetOnSpawn = false
-    screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    print("ScreenGui creado")
-
-    local frame = Instance.new("Frame")
-    frame.Parent = screenGui
-    frame.Size = UDim2.new(0, 300, 0, 350)
-    frame.Position = UDim2.new(0.5, -150, 0.5, -175)
-    frame.BackgroundColor3 = Color3.fromRGB(100, 0, 200)
-    frame.BackgroundTransparency = 0.5
-    frame.BorderSizePixel = 0
-    frame.Active = true
-    frame.Draggable = true
-    frame.ZIndex = 1
+    frame.Visible = false
     local frameCorner = Instance.new("UICorner")
     frameCorner.CornerRadius = UDim.new(0, 10)
     frameCorner.Parent = frame
@@ -172,19 +133,6 @@ local success, errorMsg = pcall(function()
         corner.Parent = tabButton
         tabButtons[tabName] = tabButton
     end
-    print("Pestañas creadas")
-
-    local function clearContent()
-        for _, child in ipairs(contentFrame:GetChildren()) do
-            child:Destroy()
-        end
-    end
-
-    local colors = {
-        Color3.fromRGB(255, 0, 0), Color3.fromRGB(255, 127, 0), Color3.fromRGB(255, 255, 0),
-        Color3.fromRGB(0, 255, 0), Color3.fromRGB(0, 0, 255), Color3.fromRGB(75, 0, 130),
-        Color3.fromRGB(238, 130, 238)
-    }
 
     -- ESP Logic
     local espEnabled = false
@@ -192,17 +140,22 @@ local success, errorMsg = pcall(function()
     local linesEnabled = false
     local espObjects = {}
     local espConnection
-    local maxDistance = 1000
     local outlineColor = Color3.fromRGB(255, 255, 255)
     local fillEnabled = false
     local fillColor = Color3.fromRGB(255, 255, 255)
     local fillTransparency = 0.5
 
+    local colors = {
+        Color3.fromRGB(255, 0, 0), Color3.fromRGB(255, 127, 0), Color3.fromRGB(255, 255, 0),
+        Color3.fromRGB(0, 255, 0), Color3.fromRGB(0, 0, 255), Color3.fromRGB(75, 0, 130),
+        Color3.fromRGB(238, 130, 238)
+    }
+
     local function applyESP(character)
         if not character or not character:FindFirstChild("HumanoidRootPart") or not character:FindFirstChild("Head") then
             return
         end
-        print("Aplicando ESP a: ", character)
+        debugLabel.Text = "Aplicando ESP a: " .. character.Name
         local highlight = Instance.new("Highlight")
         highlight.Parent = character
         highlight.FillTransparency = fillEnabled and fillTransparency or 1
@@ -266,19 +219,13 @@ local success, errorMsg = pcall(function()
                 local espData = espObjects[char]
                 if rootPart and humanoid and espData then
                     local distance = (rootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
-                    if distance <= maxDistance then
-                        local teamName = plr.Team and plr.Team.Name or "No Team"
-                        local health = math.floor(humanoid.Health)
-                        local maxHealth = math.floor(humanoid.MaxHealth)
-                        espData[3].Text = string.format("%s | %.1fm | %d/%d HP | %s", teamName, distance, health, maxHealth, plr.Name)
-                        espData[1].Enabled = true
-                        espData[2].Enabled = true
-                        espData[4].Enabled = linesEnabled
-                    else
-                        espData[1].Enabled = false
-                        espData[2].Enabled = false
-                        espData[4].Enabled = false
-                    end
+                    local teamName = plr.Team and plr.Team.Name or "No Team"
+                    local health = math.floor(humanoid.Health)
+                    local maxHealth = math.floor(humanoid.MaxHealth)
+                    espData[3].Text = string.format("%s | %.1fm | %d/%d HP | %s", teamName, distance, health, maxHealth, plr.Name)
+                    espData[1].Enabled = true
+                    espData[2].Enabled = true
+                    espData[4].Enabled = linesEnabled
                 end
             end
         end
@@ -313,7 +260,7 @@ local success, errorMsg = pcall(function()
 
     local function toggleESP()
         espEnabled = not espEnabled
-        print("ESP toggled: ", espEnabled)
+        debugLabel.Text = "ESP toggled: " .. tostring(espEnabled)
         if espEnabled then
             refreshESP()
             espConnection = runService.Heartbeat:Connect(function()
@@ -392,7 +339,7 @@ local success, errorMsg = pcall(function()
             bodyVelocity.Velocity = rootPart.CFrame:VectorToWorldSpace(moveDirection)
             bodyGyro.CFrame = game.Workspace.CurrentCamera.CFrame
         end)
-        print("Fly iniciado")
+        debugLabel.Text = "Fly iniciado"
     end
 
     local function stopFly()
@@ -408,12 +355,12 @@ local success, errorMsg = pcall(function()
             flyConnection:Disconnect()
             flyConnection = nil
         end
-        print("Fly detenido")
+        debugLabel.Text = "Fly detenido"
     end
 
     local function toggleFly()
         flyEnabled = not flyEnabled
-        print("Fly toggled: ", flyEnabled)
+        debugLabel.Text = "Fly toggled: " .. tostring(flyEnabled)
         if flyEnabled then
             startFly()
         else
@@ -427,7 +374,7 @@ local success, errorMsg = pcall(function()
 
     local function toggleNoClip()
         noClipEnabled = not noClipEnabled
-        print("NoClip toggled: ", noClipEnabled)
+        debugLabel.Text = "NoClip toggled: " .. tostring(noClipEnabled)
         if noClipEnabled then
             noClipConnection = runService.Stepped:Connect(function()
                 if player.Character then
@@ -460,7 +407,7 @@ local success, errorMsg = pcall(function()
         if player.Character and player.Character:FindFirstChild("Humanoid") then
             player.Character.Humanoid.WalkSpeed = walkSpeed
         end
-        print("Velocidad actualizada: ", walkSpeed)
+        debugLabel.Text = "Velocidad actualizada: " .. walkSpeed
     end
 
     -- Combat Logic
@@ -474,12 +421,15 @@ local success, errorMsg = pcall(function()
 
     local function toggleKillAura()
         killAuraEnabled = not killAuraEnabled
-        print("Kill Aura toggled: ", killAuraEnabled)
+        debugLabel.Text = "Kill Aura toggled: " .. tostring(killAuraEnabled)
         if killAuraEnabled then
             killAuraConnection = runService.Heartbeat:Connect(function()
                 if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then return end
                 local weapon = player.Character:FindFirstChildOfClass("Tool")
-                if not weapon then return end
+                if not weapon then
+                    debugLabel.Text = "No se encontró arma para Kill Aura"
+                    return
+                end
                 for _, plr in pairs(game.Players:GetPlayers()) do
                     if plr ~= player and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
                         local distance = (plr.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
@@ -499,7 +449,7 @@ local success, errorMsg = pcall(function()
 
     local function toggleAimbot()
         aimbotEnabled = not aimbotEnabled
-        print("Aimbot toggled: ", aimbotEnabled)
+        debugLabel.Text = "Aimbot toggled: " .. tostring(aimbotEnabled)
         if aimbotEnabled then
             aimbotConnection = runService.RenderStepped:Connect(function()
                 if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then return end
@@ -530,6 +480,7 @@ local success, errorMsg = pcall(function()
 
     local function createTabContent(tabName)
         clearContent()
+        debugLabel.Text = "Pestaña " .. tabName .. " seleccionada"
         if tabName == "ESP" then
             local espToggleButton = Instance.new("TextButton")
             espToggleButton.Parent = contentFrame
@@ -539,7 +490,7 @@ local success, errorMsg = pcall(function()
             espToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             espToggleButton.Font = Enum.Font.Gotham
             espToggleButton.TextSize = 16
-            espToggleButton.Text = espEnabled and "Disable ESP" or "Enable ESP"
+            espToggleButton.Text = espEnabled and "Desactivar ESP" or "Activar ESP"
             espToggleButton.ZIndex = 3
             local corner = Instance.new("UICorner")
             corner.CornerRadius = UDim.new(0, 6)
@@ -553,7 +504,7 @@ local success, errorMsg = pcall(function()
             boxToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             boxToggleButton.Font = Enum.Font.Gotham
             boxToggleButton.TextSize = 16
-            boxToggleButton.Text = boxEnabled and "Disable Box" or "Enable Box"
+            boxToggleButton.Text = boxEnabled and "Desactivar Box" or "Activar Box"
             boxToggleButton.ZIndex = 3
             local boxCorner = Instance.new("UICorner")
             boxCorner.CornerRadius = UDim.new(0, 6)
@@ -567,7 +518,7 @@ local success, errorMsg = pcall(function()
             linesToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             linesToggleButton.Font = Enum.Font.Gotham
             linesToggleButton.TextSize = 16
-            linesToggleButton.Text = linesEnabled and "Disable Lines" or "Enable Lines"
+            linesToggleButton.Text = linesEnabled and "Desactivar Lines" or "Activar Lines"
             linesToggleButton.ZIndex = 3
             local linesCorner = Instance.new("UICorner")
             linesCorner.CornerRadius = UDim.new(0, 6)
@@ -640,38 +591,38 @@ local success, errorMsg = pcall(function()
             end
 
             espToggleButton.MouseButton1Click:Connect(function()
-                print("Botón ESP clickeado")
+                debugLabel.Text = "Botón ESP clickeado"
                 toggleESP()
-                espToggleButton.Text = espEnabled and "Disable ESP" or "Enable ESP"
+                espToggleButton.Text = espEnabled and "Desactivar ESP" or "Activar ESP"
             end)
             boxToggleButton.MouseButton1Click:Connect(function()
-                print("Botón Box clickeado")
+                debugLabel.Text = "Botón Box clickeado"
                 boxEnabled = not boxEnabled
-                boxToggleButton.Text = boxEnabled and "Disable Box" or "Enable Box"
+                boxToggleButton.Text = boxEnabled and "Desactivar Box" or "Activar Box"
                 updateChams()
             end)
             linesToggleButton.MouseButton1Click:Connect(function()
-                print("Botón Lines clickeado")
+                debugLabel.Text = "Botón Lines clickeado"
                 linesEnabled = not linesEnabled
-                linesToggleButton.Text = linesEnabled and "Disable Lines" or "Enable Lines"
+                linesToggleButton.Text = linesEnabled and "Desactivar Lines" or "Activar Lines"
                 updateChams()
             end)
             for i, button in ipairs(outlineColorButtons) do
                 button.MouseButton1Click:Connect(function()
-                    print("Botón de color de borde ", i, " clickeado")
+                    debugLabel.Text = "Color de borde " .. i .. " seleccionado"
                     outlineColor = colors[i]
                     updateChams()
                 end)
             end
             fillToggleButton.MouseButton1Click:Connect(function()
-                print("Botón de relleno clickeado")
+                debugLabel.Text = "Botón de relleno clickeado"
                 fillEnabled = not fillEnabled
                 fillToggleButton.Text = fillEnabled and "On" or "Off"
                 updateChams()
             end)
             for i, button in ipairs(fillColorButtons) do
                 button.MouseButton1Click:Connect(function()
-                    print("Botón de color de relleno ", i, " clickeado")
+                    debugLabel.Text = "Color de relleno " .. i .. " seleccionado"
                     fillColor = colors[i]
                     updateChams()
                 end)
@@ -759,28 +710,28 @@ local success, errorMsg = pcall(function()
             downButtonCorner.Parent = downButton
 
             flyToggleButton.MouseButton1Click:Connect(function()
-                print("Botón de toggle fly clickeado")
+                debugLabel.Text = "Botón Fly clickeado"
                 toggleFly()
                 flyToggleButton.Text = flyEnabled and "Desactivar Fly" or "Activar Fly"
             end)
             increaseSpeedButton.MouseButton1Click:Connect(function()
-                print("Botón de aumentar velocidad clickeado")
+                debugLabel.Text = "Aumentar velocidad clickeado"
                 flySpeed = math.clamp(flySpeed + 10, 10, 200)
                 speedLabel.Text = "Velocidad: " .. flySpeed
             end)
             decreaseSpeedButton.MouseButton1Click:Connect(function()
-                print("Botón de disminuir velocidad clickeado")
+                debugLabel.Text = "Disminuir velocidad clickeado"
                 flySpeed = math.clamp(flySpeed - 10, 10, 200)
                 speedLabel.Text = "Velocidad: " .. flySpeed
             end)
             upButton.MouseButton1Click:Connect(function()
-                print("Botón de subir clickeado")
+                debugLabel.Text = "Botón Subir clickeado"
                 if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                     player.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 10, 0)
                 end
             end)
             downButton.MouseButton1Click:Connect(function()
-                print("Botón de bajar clickeado")
+                debugLabel.Text = "Botón Bajar clickeado"
                 if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                     player.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, -10, 0)
                 end
@@ -794,16 +745,16 @@ local success, errorMsg = pcall(function()
             noClipToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             noClipToggleButton.Font = Enum.Font.Gotham
             noClipToggleButton.TextSize = 16
-            noClipToggleButton.Text = noClipEnabled and "Disable NoClip" or "Enable NoClip"
+            noClipToggleButton.Text = noClipEnabled and "Desactivar NoClip" or "Activar NoClip"
             noClipToggleButton.ZIndex = 3
             local corner = Instance.new("UICorner")
             corner.CornerRadius = UDim.new(0, 6)
             corner.Parent = noClipToggleButton
 
             noClipToggleButton.MouseButton1Click:Connect(function()
-                print("Botón NoClip clickeado")
+                debugLabel.Text = "Botón NoClip clickeado"
                 toggleNoClip()
-                noClipToggleButton.Text = noClipEnabled and "Disable NoClip" or "Enable NoClip"
+                noClipToggleButton.Text = noClipEnabled and "Desactivar NoClip" or "Activar NoClip"
             end)
         elseif tabName == "Speed" then
             local speedLabel = Instance.new("TextLabel")
@@ -846,12 +797,12 @@ local success, errorMsg = pcall(function()
             decreaseSpeedCorner.Parent = decreaseSpeedButton
 
             increaseSpeedButton.MouseButton1Click:Connect(function()
-                print("Botón de aumentar velocidad clickeado")
+                debugLabel.Text = "Aumentar velocidad clickeado"
                 updateSpeed(10)
                 speedLabel.Text = "Velocidad: " .. walkSpeed
             end)
             decreaseSpeedButton.MouseButton1Click:Connect(function()
-                print("Botón de disminuir velocidad clickeado")
+                debugLabel.Text = "Disminuir velocidad clickeado"
                 updateSpeed(-10)
                 speedLabel.Text = "Velocidad: " .. walkSpeed
             end)
@@ -864,7 +815,7 @@ local success, errorMsg = pcall(function()
             killAuraToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             killAuraToggleButton.Font = Enum.Font.Gotham
             killAuraToggleButton.TextSize = 16
-            killAuraToggleButton.Text = killAuraEnabled and "Disable Kill Aura" or "Enable Kill Aura"
+            killAuraToggleButton.Text = killAuraEnabled and "Desactivar Kill Aura" or "Activar Kill Aura"
             killAuraToggleButton.ZIndex = 3
             local killAuraCorner = Instance.new("UICorner")
             killAuraCorner.CornerRadius = UDim.new(0, 6)
@@ -878,7 +829,7 @@ local success, errorMsg = pcall(function()
             aimbotToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             aimbotToggleButton.Font = Enum.Font.Gotham
             aimbotToggleButton.TextSize = 16
-            aimbotToggleButton.Text = aimbotEnabled and "Disable Aimbot" or "Enable Aimbot"
+            aimbotToggleButton.Text = aimbotEnabled and "Desactivar Aimbot" or "Activar Aimbot"
             aimbotToggleButton.ZIndex = 3
             local aimbotCorner = Instance.new("UICorner")
             aimbotCorner.CornerRadius = UDim.new(0, 6)
@@ -963,41 +914,47 @@ local success, errorMsg = pcall(function()
             decreaseFOVCorner.Parent = decreaseFOVButton
 
             killAuraToggleButton.MouseButton1Click:Connect(function()
-                print("Botón Kill Aura clickeado")
+                debugLabel.Text = "Botón Kill Aura clickeado"
                 toggleKillAura()
-                killAuraToggleButton.Text = killAuraEnabled and "Disable Kill Aura" or "Enable Kill Aura"
+                killAuraToggleButton.Text = killAuraEnabled and "Desactivar Kill Aura" or "Activar Kill Aura"
             end)
             aimbotToggleButton.MouseButton1Click:Connect(function()
-                print("Botón Aimbot clickeado")
+                debugLabel.Text = "Botón Aimbot clickeado"
                 toggleAimbot()
-                aimbotToggleButton.Text = aimbotEnabled and "Disable Aimbot" or "Enable Aimbot"
+                aimbotToggleButton.Text = aimbotEnabled and "Desactivar Aimbot" or "Activar Aimbot"
             end)
             headButton.MouseButton1Click:Connect(function()
-                print("Botón Cabeza clickeado")
+                debugLabel.Text = "Botón Cabeza clickeado"
                 aimPart = "Head"
                 aimPartLabel.Text = "Parte a Apuntar: " .. aimPart
             end)
             torsoButton.MouseButton1Click:Connect(function()
-                print("Botón Torso clickeado")
+                debugLabel.Text = "Botón Torso clickeado"
                 aimPart = "HumanoidRootPart"
                 aimPartLabel.Text = "Parte a Apuntar: " .. aimPart
             end)
             increaseFOVButton.MouseButton1Click:Connect(function()
-                print("Botón de aumentar FOV clickeado")
+                debugLabel.Text = "Aumentar FOV clickeado"
                 aimFOV = math.clamp(aimFOV + 10, 50, 200)
                 fovLabel.Text = "FOV: " .. aimFOV
             end)
             decreaseFOVButton.MouseButton1Click:Connect(function()
-                print("Botón de disminuir FOV clickeado")
+                debugLabel.Text = "Disminuir FOV clickeado"
                 aimFOV = math.clamp(aimFOV - 10, 50, 200)
                 fovLabel.Text = "FOV: " .. aimFOV
             end)
         end
     end
 
+    local function clearContent()
+        for _, child in ipairs(contentFrame:GetChildren()) do
+            child:Destroy()
+        end
+    end
+
     for tabName, button in pairs(tabButtons) do
         button.MouseButton1Click:Connect(function()
-            print("Pestaña " .. tabName .. " clickeada")
+            debugLabel.Text = "Pestaña " .. tabName .. " clickeada"
             currentTab = tabName
             createTabContent(tabName)
             for _, btn in pairs(tabButtons) do
@@ -1015,7 +972,7 @@ local success, errorMsg = pcall(function()
             tabFrame.Visible = false
             contentFrame.Visible = false
             minimizeButton.Text = "+"
-            print("Menú minimizado")
+            debugLabel.Text = "Menú minimizado"
         else
             frame.Size = UDim2.new(0, 300, 0, 350)
             tabFrame.Visible = true
@@ -1024,12 +981,20 @@ local success, errorMsg = pcall(function()
             if currentTab then
                 createTabContent(currentTab)
             end
-            print("Menú restaurado")
+            debugLabel.Text = "Menú restaurado"
+        end
+    end
+
+    local function toggleMenu()
+        frame.Visible = not frame.Visible
+        debugLabel.Text = frame.Visible and "Menú abierto" or "Menú cerrado"
+        if isMinimized and frame.Visible then
+            toggleMinimize()
         end
     end
 
     closeButton.MouseButton1Click:Connect(function()
-        print("Botón Cerrar clickeado")
+        debugLabel.Text = "Botón Cerrar clickeado"
         screenGui:Destroy()
         if espConnection then espConnection:Disconnect() end
         stopFly()
@@ -1039,18 +1004,20 @@ local success, errorMsg = pcall(function()
     end)
 
     minimizeButton.MouseButton1Click:Connect(function()
-        print("Botón Minimizar clickeado")
+        debugLabel.Text = "Botón Minimizar clickeado"
         toggleMinimize()
+    end)
+
+    toggleButton.MouseButton1Click:Connect(function()
+        debugLabel.Text = "Botón de toggle clickeado"
+        toggleMenu()
     end)
 
     userInputService.InputBegan:Connect(function(input, gameProcessed)
         if gameProcessed then return end
         if input.KeyCode == Enum.KeyCode.E then
-            print("Tecla E presionada")
-            frame.Visible = not frame.Visible
-            if isMinimized then
-                toggleMinimize()
-            end
+            debugLabel.Text = "Tecla E presionada"
+            toggleMenu()
         end
     end)
 
@@ -1076,10 +1043,26 @@ local success, errorMsg = pcall(function()
     createTabContent("ESP")
     tabButtons["ESP"].BackgroundColor3 = Color3.fromRGB(65, 65, 75)
     currentTab = "ESP"
+    debugLabel.Text = "Script cargado. Toca el botón ☰ para abrir el menú."
 end)
 
 if not success then
-    warn("Error al ejecutar el script: ", tostring(errorMsg))
-else
-    print("Script ejecutado correctamente")
+    local player = game.Players.LocalPlayer
+    local playerGui = player:FindFirstChild("PlayerGui")
+    if playerGui then
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "ErrorGui"
+        screenGui.Parent = playerGui
+        local errorLabel = Instance.new("TextLabel")
+        errorLabel.Size = UDim2.new(1, 0, 0, 50)
+        errorLabel.Position = UDim2.new(0, 0, 0, 0)
+        errorLabel.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        errorLabel.BackgroundTransparency = 0.5
+        errorLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        errorLabel.Font = Enum.Font.GothamBold
+        errorLabel.TextSize = 20
+        errorLabel.Text = "Error: " .. tostring(errorMsg)
+        errorLabel.TextWrapped = true
+        errorLabel.Parent = screenGui
+    end
 end
